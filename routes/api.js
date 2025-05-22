@@ -28,7 +28,7 @@ module.exports = function (app) {
     .post(async function (req, res) {
       let title = req.body.title;
       if (!title) {
-        return res.status(400).send("missing required field title");
+        return res.status(400).type('text').send("missing required field title");
       }
       try {
         const result = await Book.create({
@@ -64,10 +64,10 @@ module.exports = function (app) {
         if (result) {
           return res.json(result);
         } else {
-          return res.status(404).send("no book exists");
+          return res.status(404).type('text').send('no book exists');
         }
       } catch (err) {
-        return res.status(404).send("no book exists");
+        return res.status(404).type('text').send('no book exists');
       }
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
     })
@@ -75,14 +75,14 @@ module.exports = function (app) {
     .post(async function (req, res) {
       let bookid = req.params.id;
       let comment = req.body.comment;
-      if (!comment) return res.status(400).send("missing required field comment");
+      if (!comment) return res.status(400).type('text').send("missing required field comment");
       try {
         let result = await Book.findById(bookid);
         result.comments.push(comment);
         result.save();
         return res.json(result);
       } catch (error) {
-        return res.status(404).send("no book exists");
+        return res.status(404).type('text').type('text').send('no book exists');
       }
 
       //json res format same as .get
@@ -95,10 +95,10 @@ module.exports = function (app) {
         if (result) {
          return  res.send("delete successful");
         } else {
-          return res.status(404).send("no book exists");
+          return res.status(404).type('text').send('no book exists');
         }
       } catch (error) {
-        return res.status(404).send("no book exists");
+        return res.status(404).type('text').send('no book exists');
       }
       //if successful response will be 'delete successful'
     });
