@@ -3,14 +3,22 @@
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const cors        = require('cors');
+const expect = require("chai").expect;
 require('dotenv').config();
 
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
+const mongoose = require('mongoose');
 
 const app = express();
-
+let db;
+mongoose.connect(process.env.DB).then(() => {
+  console.log('Mongo DB Connected!');
+ db = mongoose.connection; 
+}).catch((err) => {
+    console.error(err);
+});
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
@@ -53,4 +61,4 @@ const listener = app.listen(process.env.PORT || 3000, function () {
   }
 });
 
-module.exports = app; //for unit/functional testing
+module.exports = {app, db}; //for unit/functional testing
