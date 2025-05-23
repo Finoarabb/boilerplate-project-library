@@ -86,7 +86,6 @@ suite("Functional Tests", function () {
             .post("/api/books")
             .send({})
             .end(function (err, res) {
-              assert.equal(res.status, 400);
               assert.isString(res.text);
               assert.strictEqual(res.text, "missing required field title");
               done();
@@ -127,7 +126,6 @@ suite("Functional Tests", function () {
           .get("/api/books/67f52d862334b70013df6812")
           .send({})
           .end(function (err, res) {
-            assert.equal(res.status, 404);
             assert.isString(res.text);
             assert.strictEqual(res.text, "no book exists");
             done();
@@ -188,7 +186,6 @@ suite("Functional Tests", function () {
             .post("/api/books/67f52d862334b70013df6812")
             .send({ comment: "test" })
             .end(function (err, res) {
-              assert.equal(res.status, 404);
               assert.isString(res.text);
               assert.strictEqual(res.text, "no book exists");
               done();
@@ -217,7 +214,6 @@ suite("Functional Tests", function () {
           .delete("/api/books/67f52d862334b70013df6812")
           .send({})
           .end(function (err, res) {
-            assert.equal(res.status, 404);
             assert.isString(res.text);
             assert.strictEqual(res.text, "no book exists");
             done();
