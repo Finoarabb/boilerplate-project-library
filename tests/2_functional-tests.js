@@ -176,7 +176,6 @@ suite("Functional Tests", function () {
             .post("/api/books/" + id)
             .send({})
             .end(function (err, res) {
-              assert.equal(res.status, 400);
               assert.isString(res.text);
               assert.strictEqual(res.text, "missing required field comment");
               done();
