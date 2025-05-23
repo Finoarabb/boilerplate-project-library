@@ -28,7 +28,7 @@ module.exports = function (app) {
     .post(async function (req, res) {
       let title = req.body.title;
       if (!title) {
-        return res.status(400).type('text').send("missing required field title");
+        return res.send("missing required field title");
       }
       try {
         const result = await Book.create({
@@ -64,10 +64,10 @@ module.exports = function (app) {
         if (result) {
           return res.json(result);
         } else {
-          return res.status(404).type('text').send('no book exists');
+          return res.send('no book exists');
         }
       } catch (err) {
-        return res.status(404).type('text').send('no book exists');
+        return res.send('no book exists');
       }
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
     })
@@ -95,10 +95,10 @@ module.exports = function (app) {
         if (result) {
          return  res.send("delete successful");
         } else {
-          return res.status(404).type('text').send('no book exists');
+          return res.send('no book exists');
         }
       } catch (error) {
-        return res.status(404).type('text').send('no book exists');
+        return res.send('no book exists');
       }
       //if successful response will be 'delete successful'
     });
